@@ -1,9 +1,12 @@
 package com.example.kevin.clemapp.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.kevin.clemapp.R;
 
@@ -13,6 +16,18 @@ public class ItemActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
+
+        Intent intent = getIntent();
+        TextView nametv = new TextView(this);
+        nametv.setText(getIntent().getStringExtra("name"));
+        TextView sellertv = new TextView(this);
+        sellertv.setText(getIntent().getStringExtra("seller"));
+        TextView pricetv = new TextView(this);
+        pricetv.setText(getIntent().getStringExtra("price"));
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.content);
+        layout.addView(nametv);
+        layout.addView(sellertv);
+        layout.addView(pricetv);
     }
 
     @Override

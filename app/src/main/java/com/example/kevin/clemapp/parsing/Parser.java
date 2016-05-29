@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.kevin.clemapp.activities.ItemActivity;
 import com.example.kevin.clemapp.models.Item;
 
 import org.jsoup.Jsoup;
@@ -74,7 +75,7 @@ public class Parser extends AsyncTask<String, Void, String> {
 
    @Override
     protected String doInBackground(String... params){
-       Document doc = null;
+       Document doc;
        try {
            doc = Jsoup.connect(url).get();
 
@@ -93,12 +94,12 @@ public class Parser extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {
 
         System.out.println(result);
-      //  Intent intent = new Intent(this.activity, ItemActivity.class);
-      /*  intent.putExtra("name",i.getName());
+        Intent intent = new Intent(this.activity, ItemActivity.class);
+        intent.putExtra("name",i.getName());
         intent.putExtra("price",i.getPrice());
         intent.putExtra("seller",i.getSeller());
         activity.startActivity(intent);
-    */
+
     }
 
 }

@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
 
     public void onClick(View v){
         EditText mEdit = (EditText)findViewById(R.id.editText);
-        Parser p = new Parser(mEdit.getText().toString());
+        Parser p = new Parser(this, mEdit.getText().toString());
         p.execute(url);
 
     }
