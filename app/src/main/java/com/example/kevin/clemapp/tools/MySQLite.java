@@ -13,7 +13,7 @@ import com.example.kevin.clemapp.managers.ItemManager;
 public class MySQLite extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "db.sqlite";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
     private static MySQLite sInstance;
 
     public static synchronized MySQLite getInstance(Context context) {
@@ -32,7 +32,8 @@ public class MySQLite extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
-
+        this.getWritableDatabase().delete("item", null, null);
+        this.getWritableDatabase().execSQL("DROP TABLE IF EXISTS item");
         onCreate(sqLiteDatabase);
     }
 

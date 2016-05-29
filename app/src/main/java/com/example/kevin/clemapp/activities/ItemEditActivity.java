@@ -26,7 +26,6 @@
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_item);
 
-            Intent intent = getIntent();
             TextView nametv = (TextView) findViewById(R.id.name);
             nametv.setText(getIntent().getStringExtra("name"));
             TextView sellertv = (TextView) findViewById(R.id.seller);

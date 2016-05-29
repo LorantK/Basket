@@ -24,9 +24,9 @@ public class ItemManager {
     public static final String CREATE_TABLE_ITEM = "CREATE TABLE "+TABLE_NAME+
             " (" +
             " "+KEY_ID_ITEM+" INTEGER primary key," +
-            " "+KEY_NOM_ITEM+" TEXT" +
-            " "+KEY_PRICE_ITEM+" TEXT" +
-            " "+KEY_SELLER_ITEM+" TEXT" +
+            " "+KEY_NOM_ITEM+" TEXT," +
+            " "+KEY_PRICE_ITEM+" TEXT," +
+            " "+KEY_SELLER_ITEM+" TEXT," +
             " "+KEY_URL_ITEM+" TEXT" +
             ");";
     private MySQLite maBaseSQLite;
@@ -48,10 +48,21 @@ public class ItemManager {
         db.close();
     }
 
+    public void drop() {
+        db.delete(TABLE_NAME, null, null);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+    }
+
+    public void clear(){
+        db.delete(TABLE_NAME,null,null);
+    }
     public long addItem(Item item) {
 
         ContentValues values = new ContentValues();
         values.put(KEY_NOM_ITEM, item.getName());
+        values.put(KEY_PRICE_ITEM, item.getPrice());
+        values.put(KEY_SELLER_ITEM, item.getSeller());
+        values.put(KEY_URL_ITEM, item.getUrl());
 
         return db.insert(TABLE_NAME,null,values);
     }
@@ -84,7 +95,7 @@ public class ItemManager {
 
         Item i=new Item(0,"","","","");
 
-        Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+KEY_ID_ITEM+"="+id, null);
+        Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE " + KEY_ID_ITEM + "=" + id, null);
         if (c.moveToFirst()) {
             i.setId(c.getInt(c.getColumnIndex(KEY_ID_ITEM)));
             i.setName(c.getString(c.getColumnIndex(KEY_NOM_ITEM)));
@@ -98,7 +109,6 @@ public class ItemManager {
     }
 
     public Cursor getItems() {
-
         return db.rawQuery("SELECT * FROM "+TABLE_NAME, null);
     }
 

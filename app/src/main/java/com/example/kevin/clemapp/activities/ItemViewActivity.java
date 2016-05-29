@@ -1,35 +1,43 @@
 package com.example.kevin.clemapp.activities;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.kevin.clemapp.R;
 import com.example.kevin.clemapp.managers.ItemManager;
-import com.example.kevin.clemapp.parsing.Parser;
+import com.example.kevin.clemapp.models.Item;
 
-
-public class MainActivity extends Activity {
-
-
-    String url = "https://www.amazon.fr/gp/product/B01483WYBW/ref=s9_simh_gw_p107_d1_i3?pf_rd_m=A1X6FK5RDHNB96&pf_rd_s=desktop-1&pf_rd_r=F5RETC6DKF2DV67ZBQFS&pf_rd_t=36701&pf_rd_p=863560947&pf_rd_i=desktop";
-
+public class ItemViewActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_item_view);
+        int id = getIntent().getIntExtra("id",0);
+        Log.d("getID","ID = "+id);
+        ItemManager im = new ItemManager(this);
+        im.open();
+        Item i = im.getItem(id);
+        TextView nametv = (TextView) findViewById(R.id.name);
+        nametv.setText(i.getName());
+        TextView sellertv = (TextView) findViewById(R.id.seller);
+        sellertv.setText(i.getSeller());
+        TextView pricetv = (TextView) findViewById(R.id.price);
+        pricetv.setText(i.getPrice());
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.content);
+        im.close();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_item_view, menu);
         return true;
     }
 
@@ -47,15 +55,4 @@ public class MainActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
-    public void onClick(View v){
-        EditText mEdit = (EditText)findViewById(R.id.editText);
-        Parser p = new Parser(this, mEdit.getText().toString());
-        p.execute(url);
-
-    }
-
-
-
 }

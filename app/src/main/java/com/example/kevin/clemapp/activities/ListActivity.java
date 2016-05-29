@@ -1,11 +1,13 @@
 package com.example.kevin.clemapp.activities;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,7 +18,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class ListActivity extends ActionBarActivity {
+public class ListActivity extends ActionBarActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +35,14 @@ public class ListActivity extends ActionBarActivity {
             do {
                 TextView t = new TextView(this);
                 t.setText(c.getString(c.getColumnIndex(ItemManager.KEY_NOM_ITEM)));
+                t.setId(c.getInt(c.getColumnIndex(ItemManager.KEY_ID_ITEM)));
+                t.setOnClickListener(this);
                 layout.addView(t);
             }
             while (c.moveToNext());
         }
         c.close();
+        im.close();
     }
 
     @Override
@@ -55,5 +60,12 @@ public class ListActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(this, ItemViewActivity.class);
+        intent.putExtra("id", v.getId());
+        this.startActivity(intent);
     }
 }

@@ -56,9 +56,9 @@ public class Parser extends AsyncTask<String, Void, String> {
 
         System.out.println(result);
         Intent intent = new Intent(this.activity, ItemEditActivity.class);
-        intent.putExtra("name",i.getName());
-        intent.putExtra("price",i.getPrice());
-        intent.putExtra("seller",i.getSeller());
+        intent.putExtra("name",this.i.getName());
+        intent.putExtra("price",this.i.getPrice());
+        intent.putExtra("seller",this.i.getSeller());
         activity.startActivity(intent);
 
     }
