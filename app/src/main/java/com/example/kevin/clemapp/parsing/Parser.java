@@ -5,18 +5,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.kevin.clemapp.activities.ItemActivity;
+import com.example.kevin.clemapp.activities.ItemEditActivity;
 import com.example.kevin.clemapp.models.Item;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * Created by Kevin on 18/04/2016.
@@ -60,7 +55,7 @@ public class Parser extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {
 
         System.out.println(result);
-        Intent intent = new Intent(this.activity, ItemActivity.class);
+        Intent intent = new Intent(this.activity, ItemEditActivity.class);
         intent.putExtra("name",i.getName());
         intent.putExtra("price",i.getPrice());
         intent.putExtra("seller",i.getSeller());
