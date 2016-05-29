@@ -37,40 +37,6 @@ public class Parser extends AsyncTask<String, Void, String> {
         return null;
     }
 
-   /* @Override
-    protected String doInBackground(String... params) {
-        URL siteUrl = null;
-        URLConnection siteConnection;
-        BufferedReader in;
-        String rl = null;
-        StringBuilder sb = new StringBuilder();
-        try {
-            siteUrl = new URL(params[0]);
-            siteConnection = siteUrl.openConnection();
-            in = new BufferedReader(new InputStreamReader(siteConnection.getInputStream()));
-
-
-            // Récupération du code HTML du site ligne par ligne
-            while((rl = in.readLine()) != null){
-                sb.append(rl);
-                // Test si le l'AsyncTask est cancel pour annuler
-                // la lecture du site
-                if(isCancelled()){
-                    in.close();
-                    return null;
-                }
-            }
-
-            // Fermeture du BufferReader
-            in.close();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return sb.toString();
-    }*/
 
 
    @Override
@@ -82,7 +48,7 @@ public class Parser extends AsyncTask<String, Void, String> {
            String name = doc.getElementById("productTitle").text();
            String price = doc.getElementById("priceblock_ourprice").text();
            String seller = "Amazon";
-           this.i = new Item(name,price,seller,url);
+           this.i = new Item(0,name,price,seller,url);
            return this.i.toString();
        } catch (IOException e) {
            e.printStackTrace();
