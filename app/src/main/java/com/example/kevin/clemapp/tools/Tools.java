@@ -20,4 +20,8 @@ public class Tools {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
     }
+
+
+
+
 }
