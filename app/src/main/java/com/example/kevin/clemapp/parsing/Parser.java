@@ -28,10 +28,11 @@ public class Parser extends AsyncTask<String, Void, String> {
     private ProgressDialog pd;
 
     public Parser(Activity ac, String s, ProgressDialog pd) {
-        Log.d("Parsing", s);
+        //Log.d("Parsing", s);
         this.activity = ac;
         this.pd = pd;
-        this.url = "https://www.amazon.fr/gp/product/B01483WYBW/ref=s9_simh_gw_p107_d1_i3?pf_rd_m=A1X6FK5RDHNB96&pf_rd_s=desktop-1&pf_rd_r=F5RETC6DKF2DV67ZBQFS&pf_rd_t=36701&pf_rd_p=863560947&pf_rd_i=desktop";
+        this.url = s;
+        //this.url = "https://www.amazon.fr/gp/product/B01483WYBW/ref=s9_simh_gw_p107_d1_i3?pf_rd_m=A1X6FK5RDHNB96&pf_rd_s=desktop-1&pf_rd_r=F5RETC6DKF2DV67ZBQFS&pf_rd_t=36701&pf_rd_p=863560947&pf_rd_i=desktop";
     }
 
     @Override
