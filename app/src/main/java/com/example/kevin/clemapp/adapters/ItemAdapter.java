@@ -1,6 +1,7 @@
 package com.example.kevin.clemapp.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,9 @@ import java.util.List;
  */
 public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     private ArrayList<Item> items;
+    private SparseBooleanArray selectedItems;
 
-    public ItemAdapter(ArrayList<Item> items){
+    public ItemAdapter(ArrayList<Item> items) {
         this.items = items;
     }
 
@@ -32,7 +34,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
     @Override
     public void onBindViewHolder(ItemViewHolder itemViewHolder, int i) {
-        Item it= items.get(i);
+        Item it = items.get(i);
         itemViewHolder.getT().setText(it.getName());
     }
 
@@ -40,4 +42,28 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     public int getItemCount() {
         return items.size();
     }
+
+    public void toggleSelection(int pos) {
+        if (selectedItems.get(pos, false)) {
+            selectedItems.delete(pos);
+        } else {
+            selectedItems.put(pos, true);
+        }
+        notifyItemChanged(pos);
+    }
+
+    public void clearSelections() {
+        selectedItems.clear();
+        notifyDataSetChanged();
+    }
+
+    public int getSelectedItemCount() {
+        return selectedItems.size();
+    }
+
+    public List<Item> getSelectedItems() {
+
+        return items;
+    }
+
 }

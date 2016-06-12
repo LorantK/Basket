@@ -2,6 +2,8 @@ package com.example.kevin.clemapp.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +16,8 @@ import com.example.kevin.clemapp.R;
 import com.example.kevin.clemapp.managers.ItemManager;
 import com.example.kevin.clemapp.parsing.Parser;
 import com.example.kevin.clemapp.tools.Tools;
+
+import java.util.List;
 
 
 public class MainActivity extends Activity {
@@ -30,22 +34,24 @@ public class MainActivity extends Activity {
     }
 
 
-    public void onClick(View v){
+    public void onClick(View v) {
         Tools t = new Tools(this);
-        if(t.isOnline()) {
-            pd=ProgressDialog.show(this,"","Please Wait",false);
+        if (t.isOnline()) {
+            pd = ProgressDialog.show(this, "", "Please Wait", false);
             EditText mEdit = (EditText) findViewById(R.id.editText);
-            Parser p = new Parser(this, mEdit.getText().toString(),pd);
+            Parser p = new Parser(this, mEdit.getText().toString(), pd);
             p.execute(url);
 
-        }
-        else {
+        } else {
             Toast toast = Toast.makeText(this, "Pas de connexion", Toast.LENGTH_SHORT);
             toast.show();
         }
 
     }
 
-
+    public void getListActivity(View v){
+        Intent intent = new Intent(this, ListActivity.class);
+        this.startActivity(intent);
+    }
 
 }

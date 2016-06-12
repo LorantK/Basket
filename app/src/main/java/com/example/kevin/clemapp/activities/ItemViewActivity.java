@@ -20,8 +20,8 @@ public class ItemViewActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_view);
-        int id = getIntent().getIntExtra("id",0);
-        Log.d("getID","ID = "+id);
+        int id = getIntent().getIntExtra("id", 0);
+        //Log.d("getID","ID = "+id);
         ItemManager im = new ItemManager(this);
         im.open();
         Item i = im.getItem(id);
@@ -34,8 +34,6 @@ public class ItemViewActivity extends Activity {
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.content);
         im.close();
     }
-
-
 
 
 }

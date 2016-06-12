@@ -1,7 +1,9 @@
 package com.example.kevin.clemapp.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
@@ -27,6 +29,7 @@ import com.example.kevin.clemapp.models.Item;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListActivity extends Activity {
 
@@ -38,7 +41,7 @@ public class ListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout );
+        LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout);
         layout.setOrientation(LinearLayout.VERTICAL);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -52,22 +55,56 @@ public class ListActivity extends Activity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                click(view, position);
+                click(view, itemList.get(position).getId());
             }
 
             @Override
             public void onLongClick(View view, int position) {
-
+                longClick(view, position);
             }
         }));
+
         getItems();
 
     }
 
-    public void click(View v, int id){
+    public void click(View v, int id) {
         Intent intent = new Intent(this, ItemViewActivity.class);
         intent.putExtra("id", id);
         this.startActivity(intent);
+    }
+
+    public void longClick(View v, int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Supprimer cet article ?")
+                .setTitle("Suppression");
+        final int pos = position;
+        builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                deleteItem(pos);
+            }
+        });
+        builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void deleteItem(int position) {
+        ItemManager im = new ItemManager(ListActivity.this);
+        im.open();
+        Item it = itemList.get(position);
+        im.supItem(it);
+        im.close();
+        itemList.remove(position);
+        recyclerView.removeViewAt(position);
+
+        itAdapter.notifyItemRemoved(position);
+        itAdapter.notifyItemRangeChanged(position, itemList.size());
+        itAdapter.notifyDataSetChanged();
     }
 
     private void getItems() {
@@ -132,7 +169,6 @@ public class ListActivity extends Activity {
         @Override
         public void onTouchEvent(RecyclerView rv, MotionEvent e) {
         }
-
 
     }
 
